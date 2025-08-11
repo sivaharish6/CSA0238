@@ -1,0 +1,269 @@
+
+1. Define a structure for student record and print details
+
+#include <stdio.h>
+
+struct Student {
+    int roll;
+    char name[50];
+    float marks;
+};
+
+void main() {
+    struct Student s = {1, "Arun", 85.5};
+
+    printf("Roll Number: %d\n", s.roll);
+    printf("Name: %s\n", s.name);
+    printf("Marks: %.2f\n", s.marks);
+}
+
+Output:
+
+Roll Number: 1
+Name: Arun
+Marks: 85.50
+
+
+---
+
+2. Store and display employee details using structures
+
+#include <stdio.h>
+
+struct Employee {
+    int id;
+    char name[50];
+    float salary;
+};
+
+void main() {
+    struct Employee e;
+    printf("Enter Employee ID: ");
+    scanf("%d", &e.id);
+    printf("Enter Name: ");
+    scanf(" %[^\n]", e.name);
+    printf("Enter Salary: ");
+    scanf("%f", &e.salary);
+
+    printf("\nEmployee Details:\nID: %d\nName: %s\nSalary: %.2f\n", e.id, e.name, e.salary);
+}
+
+Example Input/Output:
+
+Enter Employee ID: 101
+Enter Name: Ramesh
+Enter Salary: 45000
+
+Employee Details:
+ID: 101
+Name: Ramesh
+Salary: 45000.00
+
+
+---
+
+3. Pass a structure to a function
+
+#include <stdio.h>
+
+struct Student {
+    int roll;
+    char name[50];
+};
+
+void display(struct Student s) {
+    printf("Roll: %d, Name: %s\n", s.roll, s.name);
+}
+
+void main() {
+    struct Student s1 = {101, "Priya"};
+    display(s1);
+}
+
+Output:
+
+Roll: 101, Name: Priya
+
+
+---
+
+4. Store multiple student records using array of structures
+
+#include <stdio.h>
+
+struct Student {
+    int roll;
+    char name[50];
+    float marks;
+};
+
+void main() {
+    struct Student s[3];
+    for (int i = 0; i < 3; i++) {
+        printf("Enter roll, name, marks for student %d: ", i + 1);
+        scanf("%d %[^\n]", &s[i].roll, s[i].name);
+        scanf("%f", &s[i].marks);
+    }
+    printf("\nStudent Records:\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%d\t%s\t%.2f\n", s[i].roll, s[i].name, s[i].marks);
+}
+
+
+---
+
+5. Nested structures
+
+#include <stdio.h>
+
+struct Date {
+    int day, month, year;
+};
+
+struct Student {
+    int roll;
+    char name[50];
+    struct Date dob;
+};
+
+void  main() {
+    struct Student s = {101, "Kavya", {15, 8, 2004}};
+    printf("Name: %s\nDOB: %02d-%02d-%d\n", s.name, s.dob.day, s.dob.month, s.dob.year);
+}
+
+
+---
+
+6. Calculate total and average marks using structures
+
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    float m1, m2, m3, total, avg;
+};
+
+void main() {
+    struct Student s;
+    printf("Enter name and marks in 3 subjects: ");
+    scanf("%s %f %f %f", s.name, &s.m1, &s.m2, &s.m3);
+    s.total = s.m1 + s.m2 + s.m3;
+    s.avg = s.total / 3;
+
+    printf("Total: %.2f, Average: %.2f\n", s.total, s.avg);
+}
+
+
+---
+
+7. Find highest marks among students
+
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    float marks;
+};
+
+void  main() {
+    struct Student s[3];
+    int maxIndex = 0;
+    for (int i = 0; i < 3; i++) {
+        printf("Enter name and marks for student %d: ", i + 1);
+        scanf("%s %f", s[i].name, &s[i].marks);
+        if (s[i].marks > s[maxIndex].marks) {
+            maxIndex = i;
+        }
+    }
+    printf("Topper: %s with %.2f marks\n", s[maxIndex].name, s[maxIndex].marks);
+}
+
+
+---
+
+8. Sort student records by name
+
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    char name[50];
+    int roll;
+};
+
+void main() {
+    struct Student s[3], temp;
+    for (int i = 0; i < 3; i++) {
+        printf("Enter roll and name: ");
+        scanf("%d %s", &s[i].roll, s[i].name);
+    }
+    for (int i = 0; i < 3; i++) {
+        for (int j = i + 1; j < 3; j++) {
+            if (strcmp(s[i].name, s[j].name) > 0) {
+                temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+            }
+        }
+    }
+    printf("\nSorted by name:\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%d\t%s\n", s[i].roll, s[i].name);
+    }
+   
+}
+
+
+---
+
+9. Union to store data of different types
+
+#include <stdio.h>
+
+union Data {
+    int i;
+    float f;
+    char str[20];
+};
+
+void main() {
+    union Data data;
+    data.i = 10;
+    printf("Integer: %d\n", data.i);
+
+    data.f = 22.5;
+    printf("Float: %.2f\n", data.f);
+
+    snprintf(data.str, sizeof(data.str), "Hello");
+    printf("String: %s\n", data.str);
+    
+}
+
+
+---
+
+10. Structure vs Union
+
+#include <stdio.h>
+
+struct MyStruct {
+    int i;
+    float f;
+};
+
+union MyUnion {
+    int i;
+    float f;
+};
+
+void main() {
+    struct MyStruct s = {10, 20.5};
+    union MyUnion u;
+
+    printf("Structure: i=%d, f=%.2f\n", s.i, s.f);
+
+    u.i = 10;
+    printf("Union after setting i: i=%d\n", u.i);
+    u.f = 20.5;
+    printf("Union after setting f: f=%.2f\n", u.f);
+}
